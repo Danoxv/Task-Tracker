@@ -21,7 +21,7 @@ class TaskController extends BaseController
         return response()->json($task);
     }
 
-    //
+
     public function show($id)
     {
         $task = Task::find($id);
@@ -34,7 +34,6 @@ class TaskController extends BaseController
         $data = $request->validate([
             'name' => 'required|max:128',
             'text' => 'nullable|string|max:8000',
-//            'author_id' => 'required',
             'status' => 'required',
         ]);
         $user = Auth::user();
@@ -59,18 +58,16 @@ class TaskController extends BaseController
 
     public function destroy($id)
     {
-        Task::findOrFail($id)->delete();
+        $deleteTask =  Task::findOrFail($id)->delete();
 
-        redirect()->back();
-        return 200;
+        return  response()->json($deleteTask);
     }
 
 
     public function restore($id)
     {
-        Task::withTrashed()->findOrFail($id)->restore();
+       $restoreTask =  Task::withTrashed()->findOrFail($id)->restore();
 
-        redirect()->back();
-        return 200;
+        return  response()->json($restoreTask);
     }
 }

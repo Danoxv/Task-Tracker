@@ -17,7 +17,7 @@ class TickController extends BaseController
         return response()->json($ticks);
     }
 
-    //
+
     public function show($id)
     {
         $task = Tick::find($id);
@@ -51,28 +51,19 @@ class TickController extends BaseController
         return response()->json($task);
     }
 
-    public function delete(Request $request, $id)
-    {
-        $task = Tick::findOrFail($id);
-        $task->delete();
-
-        return 204;
-    }
 
     public function destroy($id)
     {
-        Tick::findOrFail($id)->delete();
+        $deleteTask = Tick::findOrFail($id)->delete();
 
-        redirect()->back();
-        return 200;
+        return response()->json($deleteTask);
     }
 
 
     public function restore($id)
     {
-        Tick::withTrashed()->findOrFail($id)->restore();
+        $restoreTask = Tick::withTrashed()->findOrFail($id)->restore();
 
-        redirect()->back();
-        return 200;
+        return  response()->json($restoreTask);
     }
 }

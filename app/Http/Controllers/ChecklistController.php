@@ -18,7 +18,7 @@ class ChecklistController extends BaseController
         return response()->json($checklist);
     }
 
-    //
+
     public function show($id)
     {
         $task = Checklist::find($id);
@@ -53,18 +53,16 @@ class ChecklistController extends BaseController
 
     public function destroy($id)
     {
-        Checklist::findOrFail($id)->delete();
+        $deleteTask = Checklist::findOrFail($id)->delete();
 
-        redirect()->back();
-        return 200;
+        return  response()->json($deleteTask);
     }
 
 
     public function restore($id)
     {
-        Checklist::withTrashed()->findOrFail($id)->restore();
+        $restoreTask = Checklist::withTrashed()->findOrFail($id)->restore();
 
-        redirect()->back();
-        return 200;
+        return  response()->json($restoreTask);
     }
 }
