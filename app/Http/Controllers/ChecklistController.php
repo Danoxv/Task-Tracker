@@ -53,16 +53,14 @@ class ChecklistController extends BaseController
 
     public function destroy($id)
     {
-        $deleteTask = Checklist::findOrFail($id)->delete();
-
-        return  response()->json($deleteTask);
+        $isTaskDeleted = Checklist::where('id', $id)->delete();
+        return response()->json($isTaskDeleted);
     }
 
 
     public function restore($id)
     {
-        $restoreTask = Checklist::withTrashed()->findOrFail($id)->restore();
-
-        return  response()->json($restoreTask);
+        $isRestoreTask = Checklist::withTrashed()->where('id', $id)->restore();
+        return response()->json($isRestoreTask);
     }
 }

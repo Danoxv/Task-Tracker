@@ -49,25 +49,21 @@ class TaskController extends BaseController
             'status' => 'required',
         ]);
 
-        $task = Task::findOrFail($id);
-        $task->update($data);
-
+        $task = Task::where('id', $id)->update($data);
         return response()->json($task);
     }
 
 
     public function destroy($id)
     {
-        $deleteTask =  Task::findOrFail($id)->delete();
-
-        return  response()->json($deleteTask);
+        $isTaskDeleted = Task::where('id', $id)->delete();
+        return response()->json($isTaskDeleted);
     }
 
 
     public function restore($id)
     {
-       $restoreTask =  Task::withTrashed()->findOrFail($id)->restore();
-
-        return  response()->json($restoreTask);
+        $isRestoreTask = Task::withTrashed()->where('id', $id)->restore();
+        return response()->json($isRestoreTask);
     }
 }

@@ -54,16 +54,14 @@ class TickController extends BaseController
 
     public function destroy($id)
     {
-        $deleteTask = Tick::findOrFail($id)->delete();
-
-        return response()->json($deleteTask);
+        $isTaskDeleted = Tick::where('id', $id)->delete();
+        return response()->json($isTaskDeleted);
     }
 
 
     public function restore($id)
     {
-        $restoreTask = Tick::withTrashed()->findOrFail($id)->restore();
-
-        return  response()->json($restoreTask);
+        $isRestoreTask = Tick::withTrashed()->where('id', $id)->restore();
+        return response()->json($isRestoreTask);
     }
 }
