@@ -6,25 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
+use App\Traits\UuidModel;
 
 class Tick extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, UuidModel;
     protected $primaryKey = 'id';
 
     protected $keyType = 'string';
 
     public $incrementing = false;
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function (Model $model) {
-            $model->setAttribute($model->getKeyName(), Uuid::uuid4());
-        });
-    }
 
     protected static function booted(): void
     {

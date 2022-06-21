@@ -7,7 +7,7 @@ use App\Models\Checklist;
 use App\Models\User;
 use App\Http\Controllers\BaseController as BaseController;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Http\Response;
 
 class ChecklistController extends BaseController
 {
@@ -45,9 +45,7 @@ class ChecklistController extends BaseController
             'text' => 'nullable|string|max:8000',
         ]);
 
-        $task = Checklist::findOrFail($id);
-        $task->update($data);
-
+        $task = Checklist::where('id', $id)->update($data);
         return response()->json($task);
     }
 

@@ -7,12 +7,13 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController as BaseController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response;
 
 class TickController extends BaseController
 {
     public function index()
     {
-        $user = User::find(Auth::id());
+        $user = Auth::user();
         $ticks = $user->ticks()->get();
         return response()->json($ticks);
     }
@@ -45,9 +46,7 @@ class TickController extends BaseController
             'status' => 'required',
         ]);
 
-        $task = Tick::findOrFail($id);
-        $task->update($data);
-
+        $task = Tick::where('id', $id)->update($data);
         return response()->json($task);
     }
 
