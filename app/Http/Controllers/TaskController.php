@@ -46,9 +46,8 @@ class TaskController extends BaseController
         $data = $request->validate([
             'name' => 'required|max:128',
             'text' => 'nullable|string|max:8000',
-            'status' => 'required',
         ]);
-
+        $data['status'] = 'open';
         $task = Task::where('id', $id)->update($data);
         return response()->json($task);
     }

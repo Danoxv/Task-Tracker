@@ -35,7 +35,7 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->renderable(function (\Throwable $e, $request) {
-            return response()->json(['message' => 'The given data was invalid.']);
+            return response()->json(['message' => $e->getMessage()]);
         });
     }
 
